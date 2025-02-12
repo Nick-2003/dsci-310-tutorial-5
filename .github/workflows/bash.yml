@@ -1,0 +1,20 @@
+name: Run a bash command
+
+on: # Could even schedule this process 
+  workflow_dispatch: # If manually run in Github interface
+  push: # If push happens to the repository 
+    branches: [main] # Follows same steps as for paths, given changes to main branch 
+    paths:
+      - 'Dockerfile' # If this is changed 
+      - .github/workflows/bash.yml # File name and location to access
+      - 'conda-linux-64.lock'
+
+jobs:
+  run_bash_command: # Job now named run_bash_command
+    name: Run a bash command using github actions # For readability in Github interface
+    runs-on: ubuntu-latest # Starting container; ubuntu-latest is Linux machine and is used more often than not
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4 # Sequence of commands provided in actions
+      - name: Run multiple commands by .sh # Treated as whole bash.sh script  
+        run: bash list.sh
